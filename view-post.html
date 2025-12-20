@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading Post | Nourish & Bloom</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="navbar glass-effect">
+        <div class="logo">Nourish<span>&</span>Bloom</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="create.html">+ Create Post</a></li> 
+        </ul>
+    </nav>
+
+    <article class="section-padding" style="min-height: 60vh;">
+        <div class="container" style="max-width: 800px;">
+            
+            <div id="loading-msg" style="text-align: center; padding: 50px;">
+                Loading article...
+            </div>
+
+            <div id="post-content" style="display: none;">
+                <header style="text-align: center; margin-bottom: 40px;">
+                    <span id="post-category" class="category" style="display:inline-block; margin-bottom:10px; color:var(--primary); font-weight:bold;"></span>
+                    <h1 id="post-title" style="font-size: 2.5rem; color: #333; margin-bottom: 20px;"></h1>
+                    <p style="color: #666;">By Gillian Kagwira</p>
+                </header>
+
+                <img id="post-image" src="" alt="Post Cover" style="width: 100%; border-radius: 20px; margin-bottom: 40px; max-height: 500px; object-fit: cover;">
+
+                <div id="post-body" style="font-size: 1.1rem; line-height: 1.8; color: #444; white-space: pre-wrap;"></div>
+
+                <div id="disqus_thread" style="margin-top: 60px; padding-top: 40px; border-top: 1px solid #eee;"></div>
+            </div>
+
+        </div>
+    </article>
+
+    <footer>
+        <div class="container" style="text-align: center;">
+            <p class="disclaimer">© 2025 Nourish & Bloom.</p>
+        </div>
+    </footer>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+        // Your Config
+        const firebaseConfig = {
+            apiKey: "AIzaSyDoXIKF7OhfB8Ly5F80MKvIqqXavbfgGhg",
+            authDomain: "gillian-nutrition-db.firebaseapp.com",
+            databaseURL: "https://gillian-nutrition-db-default-rtdb.firebaseio.com",
+            projectId: "gillian-nutrition-db",
+            storageBucket: "gillian-nutrition-db.firebasestorage.app",
+            messagingSenderId: "9582534930",
+            appId: "1:9582534930:web:ac63d26318488bf858d3cb"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // 1. Get the ID from the URL (e.g. view-post.html?id=-NjKs8...)
+        const urlParams = new URLSearchParams(window.location.search);
+        const postId = urlParams.get('id');
+
+        if (!postId) {
+            document.getElementById('loading-msg').innerText = "Error: No post specified.";
+        } else {
+            // 2. Fetch that specific post from Firebase
+            const postRef = ref(db, 'posts/' + postId);
+            
+            get(postRef).then((snapshot) => {
+                if (snapshot.exists()) {
+                    const post = snapshot.val();
+                    
+                    // 3. Fill the HTML with data
+                    document.getElementById('post-category').innerText = post.category;
+                    document.getElementById('post-title').innerText = post.title;
+                    document.getElementById('post-body').innerText = post.content;
+                    document.getElementById('post-image').src = post.image;
+
+                    // Show the content, hide loading
+                    document.getElementById('loading-msg').style.display = 'none';
+                    document.getElementById('post-content').style.display = 'block';
+                    document.title = post.title + " | Nourish & Bloom";
+
+                    // 4. LOAD DISQUS COMMENTS
+                    loadDisqus(postId, post.title);
+
+                } else {
+                    document.getElementById('loading-msg').innerText = "Post not found.";
+                }
+            }).catch((error) => {
+                console.error(error);
+                document.getElementById('loading-msg').innerText = "Error loading post.";
+            });
+        }
+
+        // Helper function to start Disqus
+        function loadDisqus(id, title) {
+            // Disqus Config Variables
+            window.disqus_config = function () {
+                this.page.url = window.location.href;  
+                this.page.identifier = id; // IMPORTANT: This ensures comments belong to THIS specific post
+                this.page.title = title;
+            };
+
+            // Create the script tag
+            (function() { 
+                var d = document, s = d.createElement('script');
+                // ⚠️ REPLACE 'gilliannutrition' WITH YOUR ACTUAL DISQUS SHORTNAME IF DIFFERENT
+                s.src = 'https://gilliannutrition.disqus.com/embed.js'; 
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        }
+    </script>
+
+</body>
+</html>
