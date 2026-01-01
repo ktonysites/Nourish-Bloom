@@ -3,19 +3,230 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nourish & Bloom | Holistic Nutrition</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <title>Nourish & Bloom | Community Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #4A7C59;       /* Sage Green */
+            --primary-dark: #2F523A;
+            --accent: #F4A261;        /* Muted Orange */
+            --bg-light: #F9F7F2;      /* Off-white/Cream */
+            --white: #ffffff;
+            --text-dark: #2D3436;
+            --text-light: #636E72;
+            --shadow: 0 10px 30px rgba(74, 124, 89, 0.1);
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Outfit', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font-body); }
+        scroll-behavior: smooth;
+        body { background-color: var(--bg-light); color: var(--text-dark); line-height: 1.6; }
+        section { padding: 4rem 1rem; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        h1, h2, h3 { font-family: var(--font-heading); color: var(--primary-dark); }
+        .btn-main {
+            background: var(--primary); color: white; padding: 0.7rem 1.5rem;
+            border-radius: 50px; text-decoration: none; font-weight: 600;
+            transition: 0.3s; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;
+        }
+        .btn-main:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: var(--shadow); }
+        .btn-secondary {
+            background: transparent; color: var(--primary); border: 2px solid var(--primary);
+            padding: 0.7rem 1.5rem; border-radius: 50px; text-decoration: none; font-weight: 600; transition: 0.3s;
+        }
+        .btn-secondary:hover { background: var(--primary); color: white; }
+
+        /* --- Navbar --- */
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 1.2rem 5%; background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 100;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .logo { font-family: var(--font-heading); font-size: 1.8rem; font-weight: 700; color: var(--primary-dark); }
+        .logo span { color: var(--accent); }
+        .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; transition: 0.3s; }
+        .nav-links a:hover { color: var(--primary); }
+        .hamburger { display: none; font-size: 1.5rem; cursor: pointer; }
+
+        /* --- Hero Section --- */
+        .hero {
+            background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(74,124,89,0.1) 100%);
+            padding: 4rem 5% 6rem; display: flex; align-items: center; justify-content: space-between; gap: 4rem;
+        }
+        .hero-content { flex: 1; max-width: 600px; }
+        .pill-badge { display: inline-block; background: #e8f5e9; color: var(--primary-dark); padding: 6px 15px; border-radius: 20px; font-size: 0.9rem; font-weight: 600; margin-bottom: 1rem; }
+        .hero h1 { font-size: 3.5rem; line-height: 1.2; margin-bottom: 1.5rem; }
+        .hero p { font-size: 1.1rem; color: var(--text-light); margin-bottom: 2rem; }
+        .hero-buttons { display: flex; gap: 1rem; }
+        .hero-image { flex: 1; max-width: 500px; position: relative; }
+        
+        .hero-image img { width: 100%; height: auto; border-radius: 30px 5px 30px 5px; box-shadow: var(--shadow); object-fit: cover; }
+
+        /* --- About Section --- */
+        .about-wrapper { display: flex; align-items: center; gap: 4rem; }
+        .about-img-card { flex: 1; position: relative; max-width: 450px; }
+        
+        .about-img-card img { width: 100%; border-radius: 20px; box-shadow: var(--shadow); }
+        .floating-badge {
+            position: absolute; bottom: -20px; right: -20px; background: white;
+            padding: 15px 25px; border-radius: 15px; box-shadow: var(--shadow);
+            display: flex; flex-direction: column; border-left: 5px solid var(--accent);
+        }
+        .floating-badge span { font-size: 0.9rem; color: var(--text-light); }
+        .floating-badge strong { font-size: 1.2rem; color: var(--primary-dark); font-family: var(--font-heading); }
+        .about-details { flex: 1; }
+        .sub-heading { color: var(--primary); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+        .about-details h2 { font-size: 2.5rem; margin: 10px 0 20px; }
+        .credentials-box { margin-bottom: 25px; padding: 20px; background: white; border-radius: 15px; border-left: 4px solid var(--primary); box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
+        .credentials-box p { margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+        .philosophy-box { background: var(--primary); color: white; padding: 30px; border-radius: 20px; margin-top: 30px; }
+        .philosophy-box h3 { color: white; margin-bottom: 15px; }
+        .check-list { list-style: none; }
+        .check-list li { margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+
+        /* --- Community Feed Section --- */
+        .feed-header { text-align: center; margin-bottom: 3rem; }
+        .feed-header h2 { font-size: 2.5rem; }
+        
+        /* Filters & Search */
+        .controls {
+            max-width: 900px; margin: 0 auto 2rem;
+            display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; align-items: center;
+            background: white; padding: 1rem; border-radius: 50px; box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+        .search-box { position: relative; flex: 1; min-width: 200px; }
+        .search-box input {
+            width: 100%; padding: 10px 15px 10px 35px; border: none; outline: none; font-size: 1rem;
+        }
+        .search-box i { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: #aaa; }
+        .filter-tags { display: flex; gap: 8px; overflow-x: auto; }
+        .tag-btn {
+            background: var(--bg-light); border: none; padding: 8px 16px;
+            border-radius: 20px; cursor: pointer; white-space: nowrap; font-size: 0.9rem; font-weight: 600; color: var(--text-light); transition: 0.2s;
+        }
+        .tag-btn.active, .tag-btn:hover { background: var(--primary); color: white; }
+
+        /* Blog Grid */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }
+        .card {
+            background: white; border-radius: 20px; overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.03); transition: 0.3s;
+            display: flex; flex-direction: column; border: 1px solid rgba(0,0,0,0.05);
+        }
+        .card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+        .card-img-container { height: 220px; position: relative; overflow: hidden; background: #eee;}
+        .card-img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .card:hover .card-img { transform: scale(1.05); }
+        .card-badge { position: absolute; top: 15px; left: 15px; background: rgba(255,255,255,0.9); color: var(--primary-dark); padding: 5px 12px; border-radius: 10px; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; }
+        .card-body { padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column; }
+        .card h3 { font-size: 1.4rem; margin-bottom: 0.8rem; line-height: 1.3; }
+        .card p { font-size: 0.95rem; color: var(--text-light); margin-bottom: 1.5rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .card-footer { 
+            margin-top: auto; padding-top: 1rem; border-top: 1px solid #eee;
+            display: flex; justify-content: space-between; align-items: center; color: var(--text-light); font-size: 0.9rem;
+        }
+        .author i { color: var(--accent); margin-right: 5px; }
+        .action-btn { background: none; border: none; cursor: pointer; color: #aaa; transition: 0.2s; font-size: 1.1rem; padding: 5px; }
+        .action-btn:hover { color: var(--primary); }
+        .delete-btn:hover { color: #ff6b6b; }
+
+        /* --- Modal & File Upload --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); z-index: 1000;
+            display: none; justify-content: center; align-items: center;
+            backdrop-filter: blur(5px); padding: 20px;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal {
+            background: white; width: 100%; max-width: 550px;
+            border-radius: 25px; padding: 2.5rem; position: relative;
+            max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow);
+        }
+        .close-modal { position: absolute; top: 20px; right: 25px; font-size: 1.8rem; cursor: pointer; color: var(--text-light); }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; font-weight: 600; margin-bottom: 0.8rem; color: var(--primary-dark); }
+        .form-input {
+            width: 100%; padding: 12px 15px; border: 2px solid #eee;
+            border-radius: 12px; font-size: 1rem; transition: 0.3s; background: var(--bg-light);
+        }
+        .form-input:focus { border-color: var(--primary); outline: none; background: white; }
+        
+        /* File Upload Styling */
+        .file-upload-container {
+            border: 2px dashed #ccc; padding: 20px; text-align: center; border-radius: 12px; cursor: pointer; transition: 0.3s; background: var(--bg-light);
+        }
+        .file-upload-container:hover { border-color: var(--primary); background: white; }
+        .file-input-hidden { display: none; }
+        .upload-icon { font-size: 2rem; color: var(--primary); margin-bottom: 10px; }
+        
+        /* --- NEW CSS FOR EDITABLE IMAGES --- */
+        #imagePreviewContainer {
+            display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px;
+        }
+        .preview-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+        .preview-thumb { 
+            width: 80px; height: 80px; object-fit: cover; border-radius: 8px; border: 2px solid #eee; 
+        }
+        .remove-img-btn {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: 0.2s;
+        }
+        .remove-img-btn:hover { background: #e74c3c; transform: scale(1.1); }
+
+
+        .pin-wrapper { display: flex; gap: 15px; align-items: center; background: #fff3e0; padding: 15px; border-radius: 12px; border: 1px solid var(--accent); }
+        .pin-input { border: 2px solid var(--accent); width: 100px; text-align: center; letter-spacing: 3px; font-weight: 700; font-size: 1.2rem; }
+
+        /* Mobile */
+        @media(max-width: 768px) {
+            .hamburger { display: block; }
+            .nav-links { position: fixed; top: 70px; right: -100%; background: white; flex-direction: column; padding: 2rem; width: 200px; height: 100vh; transition: 0.3s; box-shadow: -5px 0 15px rgba(0,0,0,0.1); }
+            .nav-links.active { right: 0; }
+            .hero { flex-direction: column; text-align: center; padding-top: 2rem; gap: 2rem; }
+            .hero h1 { font-size: 2.5rem; }
+            .hero-buttons { justify-content: center; }
+            .about-wrapper { flex-direction: column; }
+            .about-img-card { margin-bottom: 3rem; width: 100%; }
+            .controls { border-radius: 20px; padding: 1rem; }
+        }
+    </style>
 </head>
 <body>
 
-    <nav class="navbar glass-effect">
+    <nav>
         <div class="logo">Nourish<span>&</span>Bloom</div>
         <ul class="nav-links">
             <li><a href="#home">Home</a></li>
-            <li><a href="#about">The Nutritionist</a></li>
-            <li><a href="create.html" style="color: var(--primary);">+ Create Post</a></li>
-            <li><a href="#contact" class="nav-btn">Get in Touch</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#community">Community</a></li>
+            <li>
+                 <button class="btn-main" onclick="openModal('create')">
+                    <i class="fas fa-plus-circle"></i> Create Post
+                </button>
+            </li>
         </ul>
         <div class="hamburger">☰</div>
     </nav>
@@ -26,281 +237,442 @@
             <h1>Eat Well, <br>Live Vibrantly.</h1>
             <p>Discover the power of real food. Simple recipes, gut-health advice, and honest nutrition guides for the modern lifestyle.</p>
             <div class="hero-buttons">
-                <a href="#blog" class="btn btn-primary">Read Articles</a>
-                <a href="#about" class="btn btn-secondary">Meet the Owner</a>
+                <a href="#community" class="btn-main">Explore Community</a>
+                <a href="#about" class="btn-secondary">Meet Gillian</a>
             </div>
         </div>
         <div class="hero-image">
-            <img src="WhatsApp Image 2025-12-15 at 12.30.29.jpeg" alt="Healthy Food Bowl">
+            <img src="WhatsApp Image 2025-12-16 at 23.20.59.jpeg" alt="Gillian Kagwira">
         </div>
     </header>
 
-    <section id="about" class="section-padding">
-        <div class="container">
-            <div class="about-wrapper">
-                <div class="about-img-card">
-                    <img src="WhatsApp Image 2025-12-15 at 12.30.29.jpeg" alt="Gillian Kagwira Portrait">
-                    
-                    <div class="floating-badge">
-                        <span>Certified Clinical</span>
-                        <strong>Nutritionist</strong>
-                    </div>
+    <section id="about">
+        <div class="container about-wrapper">
+            <div class="about-img-card">
+                <img src="WhatsApp Image 2025-12-16 at 23.20.59.jpeg" alt="Gillian Kagwira Portrait">
+                <div class="floating-badge">
+                    <span>Certified Clinical</span>
+                    <strong>Nutritionist</strong>
                 </div>
+            </div>
+            
+            <div class="about-details">
+                <span class="sub-heading">About The Owner</span>
+                <h2>Hi, I'm Gillian Kagwira.</h2>
                 
-                <div class="about-details">
-                    <span class="sub-heading">About The Owner</span>
-                    <h2>Hi, I'm Gillian Kagwira.</h2>
-                    
-                    <div style="margin-bottom: 20px; padding-left: 15px; border-left: 4px solid var(--primary);">
-                        <p style="font-weight: 700; color: var(--primary-dark); font-size: 1.1rem; margin-bottom: 5px;">
-                            🎓 MSc. Applied Human Nutrition (University of Nairobi)
-                        </p>
-                        <p style="font-weight: 600; color: #666;">
-                            🏥 5+ Years Clinical Experience (Hospital Setup)
-                        </p>
-                    </div>
+                <div class="credentials-box">
+                    <p style="color: var(--primary-dark); font-weight: 700; font-size: 1.1rem;">
+                        🎓 MSc. Applied Human Nutrition (UoN)
+                    </p>
+                    <p style="color: var(--text-light); font-weight: 600;">
+                        🏥 5+ Years Clinical Experience (Hospital Setup)
+                    </p>
+                </div>
 
-                    <p class="intro-text">I bridge the gap between medical science and everyday eating. With over five years of experience working in a hospital setting, I have helped hundreds of patients manage their health through evidence-based nutrition.</p>
-                    
-                    <p>I believe that diet is a powerful clinical tool, but it should also be enjoyable. My goal is to translate complex nutritional science into practical plans that fit your life.</p>
-                    
-                    <div class="philosophy-box">
-                        <h3>Clinical Expertise</h3>
-                        <ul class="check-list">
-                            <li>✅ Evidence-based dietary management</li>
-                            <li>✅ Hospital-grade nutritional care</li>
-                            <li>✅ Management of lifestyle diseases</li>
-                            <li>✅ Personalized meal planning</li>
-                        </ul>
-                    </div>
+                <p>I bridge the gap between medical science and everyday eating. With over five years of experience working in a hospital setting, I have helped hundreds of patients manage their health through evidence-based nutrition.</p>
+                <p>I believe that diet is a powerful clinical tool, but it should also be enjoyable. My goal is to translate complex nutritional science into practical plans that fit your life.</p>
+                
+                <div class="philosophy-box">
+                    <h3>Clinical Expertise</h3>
+                    <ul class="check-list">
+                        <li><i class="fas fa-check-circle"></i> Evidence-based dietary management</li>
+                        <li><i class="fas fa-check-circle"></i> Hospital-grade nutritional care</li>
+                        <li><i class="fas fa-check-circle"></i> Management of lifestyle diseases</li>
+                        <li><i class="fas fa-check-circle"></i> Personalized meal planning</li>
+                    </ul>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="blog" class="section-padding bg-pattern">
+    <section id="community" style="background: white;">
         <div class="container">
-            <div class="section-header">
-                <h2>The Nutrition Journal</h2>
-                <p>Latest thoughts, recipes, and health tips.</p>
+            <div class="feed-header">
+                <h2>The Community Journal</h2>
+                <p>Latest thoughts, recipes, and health tips shared by you.</p>
             </div>
 
-            <div style="background: white; padding: 30px; border-radius: 20px; text-align: center; margin-bottom: 50px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); max-width: 800px; margin-left: auto; margin-right: auto; border: 1px solid #eee;">
-                <h3 style="color: var(--primary); margin-bottom: 10px; font-size: 1.5rem;">✨ Join the Community!</h3>
-                <p style="margin-bottom: 20px; color: #666; font-size: 1rem;">Did you try a new healthy recipe? Have a success story to share? We want to hear from you!</p>
-                <a href="create.html" class="btn btn-primary" style="padding: 10px 25px;">Share Your Story +</a>
+            <div class="controls">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search posts..." onkeyup="searchPosts()">
+                </div>
+                <div class="filter-tags">
+                    <button class="tag-btn active" onclick="filterPosts('All', this)">All Posts</button>
+                    <button class="tag-btn" onclick="filterPosts('Recipes', this)">Recipes</button>
+                    <button class="tag-btn" onclick="filterPosts('Facts', this)">Nutrition Facts</button>
+                    <button class="tag-btn" onclick="filterPosts('Lifestyle', this)">Lifestyle</button>
+                </div>
             </div>
-            
-            <div class="blog-grid" id="posts-container">
-                <div style="text-align: center; width: 100%; grid-column: 1/-1; padding: 40px; color: #666;">
-                    <p>Loading latest posts...</p>
+
+            <div id="posts-grid" class="grid">
+                <div style="grid-column: 1/-1; text-align: center; color: #aaa; padding: 40px;">
+                    <i class="fas fa-spinner fa-spin fa-2x"></i><br><br>Loading community posts...
                 </div>
             </div>
         </div>
     </section>
 
-   <section id="contact" class="section-padding">
-        <div class="container contact-wrapper">
-            <div class="contact-info">
-                <h2>Let's Chat</h2>
-                <p>Have a question about a post? Want to book a consultation? I'd love to hear from you.</p>
-                
-               <div class="info-item">
-    📧 <a href="mailto:gillian@example.gmail.com" style="color: var(--primary-dark); text-decoration: none;">gillian@example.gmail.com</a>
-</div>
-                
-                <div class="info-item">
-                    📸 <a href="https://instagram.com" target="_blank" style="color: var(--primary-dark); text-decoration: none;">@nourishbloom_official</a>
-                </div>
 
-                 <div class="info-item">
-                    📞 <a href="tel:+254705873063" style="color: var(--primary-dark); text-decoration: none;">+254 705 873 063</a>
-                </div>
-            </div>
+    <div class="modal-overlay" id="postModal">
+        <div class="modal">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle" style="margin-bottom: 1.5rem;">Share to Community</h2>
             
-            <form class="modern-form" action="https://formspree.io/f/mjkndyqz" method="POST">
-                
+            <form id="postForm">
+                <input type="hidden" id="postIdInput">
+                <input type="hidden" id="existingImagesInput">
+
                 <div class="form-group">
-                    <label>Your Name</label>
-                    <input type="text" name="name" placeholder="e.g. Gillian" required>
-                </div>
-                
-                <div class="form-group">
-                    <label>Your Email</label>
-                    <input type="email" name="email" placeholder="e.g. Gillian@gmail.com" required>
-                </div>
-                
-                <div class="form-group">
-                    <label>Message</label>
-                    <textarea name="message" rows="4" placeholder="How can I help you?" required></textarea>
+                    <label>Title</label>
+                    <input type="text" id="titleInput" class="form-input" placeholder="e.g., Superfood Smoothie" required>
                 </div>
 
-                <button type="submit" class="btn btn-primary full-width">Send Message</button>
+                <div class="form-group">
+                    <label>Category</label>
+                    <select id="categoryInput" class="form-input" required>
+                        <option value="Recipes">Recipes</option>
+                        <option value="Facts">Nutrition Facts</option>
+                        <option value="Lifestyle">Lifestyle</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Author Name</label>
+                    <input type="text" id="authorInput" class="form-input" placeholder="Your Name" required>
+                </div>
+
+                <div class="form-group" id="uploadArea">
+                    <label>Photos</label>
+                    <div id="existingImagesPreview" style="margin-bottom: 15px;"></div>
+                    
+                    <label for="imageFileInput" class="file-upload-container">
+                        <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                        <p>Click to add more photos</p>
+                        <input type="file" id="imageFileInput" class="file-input-hidden" accept="image/*" multiple onchange="previewImages()">
+                    </label>
+                    <div id="imagePreviewContainer"></div>
+                </div>
+
+                <div class="form-group">
+                    <label>Content</label>
+                    <textarea id="contentInput" rows="5" class="form-input" placeholder="Share your knowledge..." required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <div class="pin-wrapper">
+                        <div>
+                            <label style="margin:0;"><i class="fas fa-lock"></i> Security PIN</label>
+                            <small style="display:block; color:var(--text-light);">Required to edit/delete later.</small>
+                        </div>
+                        <input type="text" id="pinInput" class="form-input pin-input" maxlength="4" pattern="\d{4}" placeholder="####" required>
+                    </div>
+                </div>
+
+                <button type="submit" id="submitBtn" class="btn-main" style="width: 100%; justify-content: center; padding: 1rem;">
+                    Publish Post
+                </button>
             </form>
         </div>
-    </section>
-    <footer>
-        <div class="container">
-            <div class="logo footer-logo">Nourish<span>&</span>Bloom</div>
-            <p class="disclaimer">© 2025.</p>
-        </div>
-    </footer>
+    </div>
 
-    <a href="tel:+254705873063" class="floating-phone-btn">
-        📞 Call Now
-    </a>
 
-    <script>
+    <script type="module">
+        // 1. IMPORT FIREBASE FUNCTIONS
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, onValue, push, update, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+        import { getStorage, ref as sRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
+
+        // 2. FIREBASE CONFIGURATION
+        const firebaseConfig = {
+            apiKey: "AIzaSyDoXIKF7OhfB8Ly5F80MKvIqqXavbfgGhg",
+            authDomain: "gillian-nutrition-db.firebaseapp.com",
+            databaseURL: "https://gillian-nutrition-db-default-rtdb.firebaseio.com",
+            projectId: "gillian-nutrition-db",
+            storageBucket: "gillian-nutrition-db.firebasestorage.app", 
+            messagingSenderId: "9582534930",
+            appId: "1:9582534930:web:ac63d26318488bf858d3cb"
+        };
+
+        // 3. INITIALIZE FIREBASE
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const storage = getStorage(app); 
+        const postsRef = ref(db, 'posts');
+
+        // Global State Variables
+        let allPosts = [];
+        let currentFilter = 'All';
+
+        // --- NAVBAR MOBILE TOGGLE ---
         const hamburger = document.querySelector('.hamburger');
         const navLinks = document.querySelector('.nav-links');
-
-        hamburger.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-        });
-
-        // Close menu when a link is clicked
+        hamburger.addEventListener('click', () => { navLinks.classList.toggle('active'); });
         document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-            });
+            link.addEventListener('click', () => navLinks.classList.remove('active'));
         });
-    </script>
 
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getDatabase, ref, onValue, remove, push, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyDoXIKF7OhfB8Ly5F80MKvIqqXavbfgGhg",
-        authDomain: "gillian-nutrition-db.firebaseapp.com",
-        databaseURL: "https://gillian-nutrition-db-default-rtdb.firebaseio.com",
-        projectId: "gillian-nutrition-db",
-        storageBucket: "gillian-nutrition-db.firebasestorage.app",
-        messagingSenderId: "9582534930",
-        appId: "1:9582534930:web:ac63d26318488bf858d3cb"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-
-    const postsRef = ref(db, 'posts');
-    const container = document.getElementById('posts-container');
-
-    onValue(postsRef, (snapshot) => {
-        const data = snapshot.val();
-        container.innerHTML = "";
-
-        if (!data) {
-            container.innerHTML = "<div style='text-align:center; grid-column: 1/-1;'><p>No posts yet. Go create one!</p></div>";
-            return;
-        }
-
-        const posts = Object.entries(data).reverse();
-
-        posts.forEach(([id, post]) => {
-            // Check if image exists, if not use a default placeholder
-            const imageUrl = post.image ? post.image : 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=600&q=80';
-
-            const html = `
-                <article class="blog-card" style="position: relative;">
-                    <button onclick="deletePost('${id}')" style="position: absolute; top: 10px; right: 10px; background: rgba(255, 0, 0, 0.8); color: white; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; z-index: 10; font-weight: bold;">×</button>
-                    
-                    <div class="card-image" style="background-image: url('${imageUrl}');"></div>
-                    <div class="card-content">
-                        <span class="category" style="text-transform:uppercase; font-size:0.8rem; font-weight:bold; color:var(--primary);">${post.category}</span>
-                        <h3 style="margin:10px 0;">${post.title}</h3>
-                        <p style="font-size:0.95rem; color:#666; margin-bottom:15px;">${post.content.substring(0, 100)}...</p>
-                        
-                        <div class="card-footer">
-                            <a href="view-post.html?id=${id}" class="read-more">Read Full Post &rarr;</a>
-                        </div>
-                    </div>
-                </article>
-            `;
-            container.innerHTML += html;
+        // --- READ DATA ---
+        onValue(postsRef, (snapshot) => {
+            const data = snapshot.val();
+            const grid = document.getElementById('posts-grid');
+            if (!data) {
+                grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 40px;"><h3>No posts yet!</h3><p>Be the first to share.</p></div>`;
+                allPosts = [];
+                return;
+            }
+            allPosts = Object.entries(data).map(([id, post]) => ({ id, ...post })).reverse();
+            renderPosts(allPosts);
         });
-    });
 
-    window.deletePost = function(postId) {
-        const password = prompt("⚠️ ADMIN ONLY: Enter password to delete this post:");
-        if (password === "admin123") {
-            const exactPostLocation = ref(db, 'posts/' + postId);
-            remove(exactPostLocation)
-                .then(() => alert("Post deleted successfully."))
-                .catch((error) => alert("Error deleting: " + error.message));
-        } else {
-            if(password !== null) alert("Wrong password! Post was not deleted.");
-        }
-    }
 
-  // --- ⬇️ CLEAN DATA RESET FUNCTION ⬇️ ---
-    window.resetAndPopulateData = function() {
-        const postsRef = ref(db, 'posts');
-        
-        // 1. CLEAR existing data first
-        remove(postsRef).then(() => {
-            console.log("Database cleared.");
+        // --- RENDER POSTS ---
+        window.renderPosts = (posts) => {
+            const grid = document.getElementById('posts-grid');
+            grid.innerHTML = "";
             
-            // 2. ADD new unique data with FIXED IMAGES
-            const samplePosts = [
-                {
-                    title: "Ultimate Green Glow Smoothie",
-                    category: "Recipes",
-                    // Image: Green Smoothie (Working)
-                    image: "https://images.unsplash.com/photo-1610970881699-44a5587cabec?auto=format&fit=crop&w=600&q=80",
-                    content: "This isn't your average green juice. Packed with spinach, pineapple, avocado, and a hint of ginger, it supports digestion and gives your skin a serious hydration boost."
-                },
-                {
-                    title: "Gut Health: Why Fermented Foods Matter",
-                    category: "Health Tips",
-                    // Image: Yogurt & Berries (NEW LINK)
-                    image: "https://images.unsplash.com/photo-1563379926898-05f4575a45d8?auto=format&fit=crop&w=600&q=80",
-                    content: "Your gut microbiome influences everything from your mood to your immunity. Learn easy ways to incorporate kimchi, kefir, and yogurt into your daily meals."
-                },
-                {
-                    title: "Pan-Seared Salmon with Asparagus",
-                    category: "Recipes",
-                    // Image: Cooked Salmon (NEW LINK)
-                    image: "https://images.unsplash.com/photo-1519708227418-c8fd9a3a2750?auto=format&fit=crop&w=600&q=80",
-                    content: "A heart-healthy dinner ready in 20 minutes. Rich in Omega-3 fatty acids, this dish helps reduce inflammation and supports brain health. Perfect for busy weeknights."
-                },
-                {
-                    title: "The Truth About Intermittent Fasting",
-                    category: "Lifestyle",
-                    // Image: Person Meditating (Working)
-                    image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=600&q=80",
-                    content: "Is skipping breakfast actually good for you? We dive into the science behind the fasting trend, who it benefits, and who should avoid it entirely."
-                },
-                 {
-                    title: "Chocolate Protein Bliss Balls",
-                    category: "Recipes",
-                    // Image: Chocolate Balls (Working)
-                    image: "https://images.unsplash.com/photo-1599599810769-bcde5a160d32?auto=format&fit=crop&w=600&q=80",
-                    content: "Satisfy your sweet tooth without the sugar crash. These no-bake treats use raw cacao, dates, and hemp seeds for a protein-packed snack on the go."
-                },
-                {
-                    title: "Avocado Toast Variations",
-                    category: "Recipes",
-                    // Image: Avocado Toast (NEW LINK)
-                    image: "https://images.unsplash.com/photo-1603046891744-1f76eb10aec1?auto=format&fit=crop&w=600&q=80",
-                    content: "Elevate the classic brunch staple. From chili flakes and feta to poached eggs and microgreens, here are 3 ways to make your toast nutritionally complete."
+            if(posts.length === 0) {
+                 grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-light);">No posts match your filters.</div>`;
+                 return;
+            }
+
+            posts.forEach(post => {
+                let mainImageStr = "https://placehold.co/600x400?text=No+Image";
+                if (post.images && Array.isArray(post.images) && post.images.length > 0) {
+                    mainImageStr = post.images[0];
+                } else if (post.image) {
+                    mainImageStr = post.image;
                 }
-            ];
 
-            samplePosts.forEach(post => {
-                push(postsRef, post);
+                const card = `
+                    <article class="card">
+                        <div class="card-img-container">
+                             <span class="card-badge">${post.category}</span>
+                            <img src="${mainImageStr}" class="card-img" alt="${post.title}" onerror="this.src='https://placehold.co/600x400?text=Error+Loading'">
+                        </div>
+                        <div class="card-body">
+                            <h3>${post.title}</h3>
+                            <p>${post.content}</p>
+                            <div class="card-footer">
+                                <span class="author"><i class="fas fa-user-circle"></i> ${post.author || 'Community'}</span>
+                                <div style="display:flex; gap:8px;">
+                                    <button class="action-btn edit-btn" onclick="initEdit('${post.id}')" title="Edit">
+                                        <i class="fas fa-pen"></i>
+                                    </button>
+                                    <button class="action-btn delete-btn" onclick="initDelete('${post.id}')" title="Delete">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                `;
+                grid.innerHTML += card;
             });
-            
-            console.log("6 New Unique Posts Added.");
+        }
+
+
+        // --- FILTER & SEARCH ---
+        window.filterPosts = (category, btnElement) => {
+            document.querySelectorAll('.tag-btn').forEach(btn => btn.classList.remove('active'));
+            btnElement.classList.add('active');
+            currentFilter = category;
+            applyFilters();
+        }
+        window.searchPosts = () => { applyFilters(); }
+        function applyFilters() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = allPosts.filter(post => {
+                const matchesCategory = currentFilter === 'All' || post.category === currentFilter;
+                const matchesSearch = post.title.toLowerCase().includes(query) || post.content.toLowerCase().includes(query);
+                return matchesCategory && matchesSearch;
+            });
+            renderPosts(filtered);
+        }
+
+
+        // --- MODAL FUNCTIONS ---
+        window.openModal = (mode) => {
+            document.getElementById('postModal').classList.add('active');
+            document.getElementById('imagePreviewContainer').innerHTML = ''; 
+            document.getElementById('existingImagesPreview').innerHTML = '';
+            if (mode === 'create') {
+                document.getElementById('modalTitle').innerText = "Share to Community";
+                document.getElementById('postForm').reset();
+                document.getElementById('postIdInput').value = "";
+                document.getElementById('existingImagesInput').value = "";
+            }
+        }
+
+        window.closeModal = () => {
+            document.getElementById('postModal').classList.remove('active');
+        }
+        document.getElementById('postModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('postModal')) closeModal();
         });
-    }
 
-    // ⚠️ IMPORTANT: Uncomment the line below, save, refresh the page ONCE.
-    // ⚠️ THEN COMMENT IT OUT AGAIN immediately!
-    
-    //resetAndPopulateData(); 
 
-    // --- ⬆️ END OF DATA CODE ⬆️ ---
-</script>
+        // --- FILE PREVIEWER (For NEW files) ---
+        window.previewImages = () => {
+            const container = document.getElementById('imagePreviewContainer');
+            container.innerHTML = ''; 
+            const files = document.getElementById('imageFileInput').files;
+            if (files.length > 0) {
+                Array.from(files).forEach(file => {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        img.classList.add('preview-thumb');
+                        container.appendChild(img);
+                    }
+                    reader.readAsDataURL(file);
+                });
+            }
+        }
+        
+        // --- FUNCTION TO REMOVE EXISTING IMAGES DURING EDIT ---
+        window.removeExistingImage = (buttonEl, urlToRemove) => {
+            // 1. Visually remove the thumbnail wrapper
+            buttonEl.parentElement.remove();
+
+            // 2. Update the hidden input that holds the list of current image URLs
+            const hiddenInput = document.getElementById('existingImagesInput');
+            let currentUrls = JSON.parse(hiddenInput.value || '[]');
+            // Filter out the URL that was just clicked
+            currentUrls = currentUrls.filter(url => url !== urlToRemove);
+            // Update the hidden input with the new list
+            hiddenInput.value = JSON.stringify(currentUrls);
+        }
+
+
+        // --- MAIN FORM SUBMISSION ---
+        document.getElementById('postForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const submitBtn = document.getElementById('submitBtn');
+            const originalBtnText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+            submitBtn.disabled = true;
+
+            try {
+                const id = document.getElementById('postIdInput').value;
+                const fileInput = document.getElementById('imageFileInput');
+                const files = fileInput.files;
+                
+                let finalImageUrls = [];
+                // 1. Get remaining existing images from hidden input
+                const existingImagesStr = document.getElementById('existingImagesInput').value;
+                if(existingImagesStr) {
+                    finalImageUrls = JSON.parse(existingImagesStr);
+                }
+
+                // 2. Upload new files if any
+                if (files.length > 0) {
+                    const uploadPromises = Array.from(files).map(file => {
+                        const storageRef = sRef(storage, `images/${Date.now()}_${file.name}`);
+                        return uploadBytes(storageRef, file).then(snapshot => getDownloadURL(snapshot.ref));
+                    });
+                    const newUrls = await Promise.all(uploadPromises);
+                    finalImageUrls = [...finalImageUrls, ...newUrls];
+                }
+
+                const postData = {
+                    title: document.getElementById('titleInput').value,
+                    category: document.getElementById('categoryInput').value,
+                    author: document.getElementById('authorInput').value,
+                    content: document.getElementById('contentInput').value,
+                    pin: document.getElementById('pinInput').value,
+                    images: finalImageUrls, // Save the combined list
+                    timestamp: Date.now()
+                };
+
+                if (!id) {
+                    await push(postsRef, postData);
+                    alert("Post published successfully! 🎉");
+                } else {
+                    await update(ref(db, 'posts/' + id), postData);
+                    alert("Post updated successfully! ✨");
+                }
+                closeModal();
+
+            } catch (error) {
+                console.error("Error:", error);
+                alert("Error: " + error.message);
+            } finally {
+                submitBtn.innerHTML = originalBtnText;
+                submitBtn.disabled = false;
+            }
+        });
+
+
+        // --- EDIT POST INITIALIZATION (UPDATED) ---
+        window.initEdit = (id) => {
+            const post = allPosts.find(p => p.id === id);
+            if (!post) return;
+
+            const userPin = prompt("🔒 Enter the 4-digit PIN to edit this post:");
+            if (String(userPin) !== String(post.pin)) {
+                alert("Incorrect PIN. Access denied.");
+                return;
+            }
+
+            document.getElementById('postIdInput').value = id;
+            document.getElementById('titleInput').value = post.title;
+            document.getElementById('categoryInput').value = post.category;
+            document.getElementById('authorInput').value = post.author || '';
+            document.getElementById('contentInput').value = post.content;
+            document.getElementById('pinInput').value = post.pin;
+            
+            // Handle existing images
+            let currentImages = [];
+            if(post.images && Array.isArray(post.images)){
+                 currentImages = post.images;
+            } else if (post.image) {
+                 currentImages = [post.image];
+            }
+            document.getElementById('existingImagesInput').value = JSON.stringify(currentImages);
+            
+            // --- SHOW EXISTING IMAGES WITH DELETE BUTTONS ---
+            const container = document.getElementById('existingImagesPreview');
+            container.innerHTML = ''; // Clear previous
+            
+            if(currentImages.length > 0) {
+                container.innerHTML = '<p style="font-size:0.9rem; margin-bottom:5px; font-weight:600;">Existing Images:</p>';
+                const wrapperContainer = document.createElement('div');
+                 wrapperContainer.style.display = 'flex';
+                 wrapperContainer.style.gap = '10px';
+                 wrapperContainer.style.flexWrap = 'wrap';
+
+                currentImages.forEach(url => {
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'preview-wrapper';
+                    wrapper.innerHTML = `
+                        <img src="${url}" class="preview-thumb">
+                        <button type="button" class="remove-img-btn" onclick="removeExistingImage(this, '${url}')">×</button>
+                    `;
+                    wrapperContainer.appendChild(wrapper);
+                });
+                container.appendChild(wrapperContainer);
+            }
+
+            document.getElementById('modalTitle').innerText = "Edit Post";
+            document.getElementById('postModal').classList.add('active');
+        }
+
+
+        // --- DELETE POST ---
+        window.initDelete = (id) => {
+            const post = allPosts.find(p => p.id === id);
+            const userPin = prompt("⚠️ DELETE POST: Enter the 4-digit PIN confirm:");
+             if (String(userPin) === String(post.pin)) {
+                if(confirm("Are you sure? This action cannot be undone.")) {
+                    remove(ref(db, 'posts/' + id)).then(() => alert("Post deleted."));
+                }
+            } else {
+                if(userPin !== null) alert("Incorrect PIN.");
+            }
+        }
+    </script>
 </body>
 </html>
