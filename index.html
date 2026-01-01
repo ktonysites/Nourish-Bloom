@@ -26,7 +26,7 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font-body); }
         scroll-behavior: smooth;
-        body { background-color: var(--bg-light); color: var(--text-dark); line-height: 1.6; overflow-x: hidden; } /* Prevent horizontal scroll */
+        body { background-color: var(--bg-light); color: var(--text-dark); line-height: 1.6; overflow-x: hidden; }
         section { padding: 4rem 1rem; }
         .container { max-width: 1200px; margin: 0 auto; }
         h1, h2, h3 { font-family: var(--font-heading); color: var(--primary-dark); }
@@ -102,53 +102,51 @@
         .form-input { width: 100%; padding: 12px 15px; border: 2px solid #eee; border-radius: 12px; font-size: 1rem; transition: 0.3s; background: #f8f8f8; }
         .form-input:focus { border-color: var(--primary); outline: none; background: white; }
 
-        /* === NEW BULLETPROOF MODAL CSS === */
+        /* === FINAL FIXED MODAL CSS === */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6); z-index: 1000;
+            background: rgba(0,0,0,0.7); z-index: 5000;
             display: none; 
-            /* This centers the modal perfectly on any screen */
-            display: none;
-            place-items: center; 
+            justify-content: center; /* Flex centering (Horizontal) */
+            align-items: center; /* Flex centering (Vertical) */
             backdrop-filter: blur(5px);
+            padding: 20px; /* Prevents touching edges */
         }
         
-        /* The ".active" class makes it visible as a grid to use place-items */
-        .modal-overlay.active { display: grid; }
+        .modal-overlay.active { display: flex !important; }
 
         .modal {
             background: white; 
-            width: 90vw; /* 90% of viewport width */
-            max-width: 500px; /* Never gets too big on desktop */
-            max-height: 85vh; /* Never gets taller than screen */
+            width: 100%;
+            max-width: 500px;
+            max-height: 85vh; /* Fits in screen */
             border-radius: 20px; 
-            padding: 25px; 
+            padding: 20px; 
             position: relative;
-            overflow-y: auto; /* Scroll inside the card */
+            overflow-y: auto; /* Internal scrolling */
             box-shadow: 0 10px 40px rgba(0,0,0,0.4);
-            animation: zoomIn 0.3s ease;
-            margin: auto; /* Ensures centering */
+            animation: popUp 0.3s ease;
+            margin: 0; /* Reset margins for flex */
         }
 
-        @keyframes zoomIn {
-            from { transform: scale(0.9); opacity: 0; }
+        @keyframes popUp {
+            from { transform: scale(0.95); opacity: 0; }
             to { transform: scale(1); opacity: 1; }
         }
 
         .close-modal { 
-            position: sticky; /* Sticks to top when scrolling */
-            top: 0; 
+            position: sticky;
+            top: 0;
             float: right;
-            margin-top: -10px;
-            margin-right: -10px;
             width: 35px; height: 35px;
-            background: #eee;
+            background: #f1f1f1;
             border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
             font-size: 1.5rem; 
             cursor: pointer; 
-            color: #555;
+            color: #333;
             z-index: 20;
+            margin-bottom: 10px;
         }
 
         /* View Gallery */
@@ -156,18 +154,18 @@
         .view-gallery::-webkit-scrollbar { display: none; }
         .view-gallery img { 
             width: 100%; 
-            height: 200px; /* Default height */
+            height: 220px; 
             object-fit: cover; 
-            border-radius: 15px; 
+            border-radius: 12px; 
             flex-shrink: 0; 
         }
         .view-gallery.multi img { width: 85%; } 
 
-        .view-title { font-family: var(--font-heading); font-size: 1.8rem; color: var(--primary-dark); margin-bottom: 10px; line-height:1.2; }
+        .view-title { font-family: var(--font-heading); font-size: 1.7rem; color: var(--primary-dark); margin-bottom: 10px; line-height:1.2; }
         .view-text { font-size: 1rem; color: var(--text-dark); line-height: 1.6; white-space: pre-wrap; }
 
         /* Toast & BackToTop */
-        #toast-container { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 2000; display: flex; flex-direction: column; gap: 10px; }
+        #toast-container { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 6000; display: flex; flex-direction: column; gap: 10px; }
         .toast { background: #333; color: white; padding: 12px 24px; border-radius: 50px; display: flex; align-items: center; gap: 10px; animation: slideIn 0.3s ease, fadeOut 0.3s ease 2.7s forwards; min-width: 300px; justify-content: center; }
         .toast.success { background: var(--primary); }
         .toast.error { background: #e74c3c; }
@@ -198,16 +196,16 @@
             .about-img-card { margin-bottom: 3rem; width: 100%; }
             .contact-wrapper { grid-template-columns: 1fr; gap: 2rem; padding: 2rem; }
             
-            /* --- FINAL MOBILE MODAL FIX --- */
+            /* --- STRICT MOBILE MODAL --- */
             .modal {
-                width: 90vw !important; /* Force width */
-                max-width: 90vw !important;
-                margin: auto !important;
+                width: 90% !important; /* Forces 90% of screen width */
+                max-width: 350px !important; /* Prevents it getting huge */
+                max-height: 80vh !important;
                 padding: 20px !important;
-                border-radius: 15px;
+                margin: auto !important;
             }
             .view-gallery img { 
-                height: 160px; /* Even smaller for aesthetics */
+                height: 180px; /* Smaller images */
             }
             .view-title { 
                 font-size: 1.4rem; 
