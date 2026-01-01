@@ -102,67 +102,52 @@
         .form-input { width: 100%; padding: 12px 15px; border: 2px solid #eee; border-radius: 12px; font-size: 1rem; transition: 0.3s; background: #f8f8f8; }
         .form-input:focus { border-color: var(--primary); outline: none; background: white; }
 
-        /* === FINAL FIXED MODAL CSS === */
+        /* === DESKTOP MODAL STYLE === */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.7); z-index: 5000;
+            background: rgba(0,0,0,0.6); z-index: 5000;
             display: none; 
-            justify-content: center; /* Flex centering (Horizontal) */
-            align-items: center; /* Flex centering (Vertical) */
+            justify-content: center; align-items: center; 
             backdrop-filter: blur(5px);
-            padding: 20px; /* Prevents touching edges */
         }
-        
-        .modal-overlay.active { display: flex !important; }
+        .modal-overlay.active { display: flex; }
 
         .modal {
             background: white; 
-            width: 100%;
-            max-width: 500px;
-            max-height: 85vh; /* Fits in screen */
+            width: 500px;
+            max-width: 90%;
+            max-height: 85vh;
             border-radius: 20px; 
-            padding: 20px; 
+            padding: 30px; 
             position: relative;
-            overflow-y: auto; /* Internal scrolling */
-            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
-            animation: popUp 0.3s ease;
-            margin: 0; /* Reset margins for flex */
+            overflow-y: auto;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            animation: zoomIn 0.3s ease;
         }
 
-        @keyframes popUp {
-            from { transform: scale(0.95); opacity: 0; }
+        @keyframes zoomIn {
+            from { transform: scale(0.9); opacity: 0; }
             to { transform: scale(1); opacity: 1; }
-        }
-
-        .close-modal { 
-            position: sticky;
-            top: 0;
-            float: right;
-            width: 35px; height: 35px;
-            background: #f1f1f1;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.5rem; 
-            cursor: pointer; 
-            color: #333;
-            z-index: 20;
-            margin-bottom: 10px;
         }
 
         /* View Gallery */
         .view-gallery { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 15px; scrollbar-width: none; }
         .view-gallery::-webkit-scrollbar { display: none; }
         .view-gallery img { 
-            width: 100%; 
-            height: 220px; 
-            object-fit: cover; 
-            border-radius: 12px; 
-            flex-shrink: 0; 
+            width: 100%; height: 220px; object-fit: cover; 
+            border-radius: 12px; flex-shrink: 0; 
         }
         .view-gallery.multi img { width: 85%; } 
 
-        .view-title { font-family: var(--font-heading); font-size: 1.7rem; color: var(--primary-dark); margin-bottom: 10px; line-height:1.2; }
+        .view-title { font-family: var(--font-heading); font-size: 1.8rem; color: var(--primary-dark); margin-bottom: 10px; line-height:1.2; }
         .view-text { font-size: 1rem; color: var(--text-dark); line-height: 1.6; white-space: pre-wrap; }
+
+        .close-modal { 
+            position: absolute; top: 15px; right: 15px; 
+            width: 32px; height: 32px; background: #f0f0f0; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; cursor: pointer; color: #666; transition: 0.2s;
+        }
 
         /* Toast & BackToTop */
         #toast-container { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 6000; display: flex; flex-direction: column; gap: 10px; }
@@ -175,7 +160,7 @@
         @keyframes slideIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
 
-        /* Edit Form extras */
+        /* Form Extras */
         .form-group { margin-bottom: 1.2rem; }
         .file-upload-container { border: 2px dashed #ccc; padding: 15px; text-align: center; border-radius: 12px; cursor: pointer; }
         #imagePreviewContainer, #existingImagesPreview { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
@@ -184,7 +169,7 @@
         .pin-input { border: 2px solid var(--accent); width: 80px; text-align: center; letter-spacing: 2px; font-weight: 700; }
         .remove-img-btn { position: relative; top: -75px; right: -55px; background: red; color: white; border: none; border-radius: 50%; width: 20px; height: 20px; cursor: pointer; }
 
-        /* Media Queries */
+        /* === MOBILE-SPECIFIC STYLES === */
         @media(max-width: 768px) {
             .nav-links { position: fixed; top: 70px; right: -100%; background: white; flex-direction: column; padding: 2rem; width: 250px; height: 100vh; transition: 0.3s; box-shadow: -5px 0 15px rgba(0,0,0,0.1); }
             .nav-links.active { right: 0; }
@@ -196,20 +181,37 @@
             .about-img-card { margin-bottom: 3rem; width: 100%; }
             .contact-wrapper { grid-template-columns: 1fr; gap: 2rem; padding: 2rem; }
             
-            /* --- STRICT MOBILE MODAL --- */
+            /* --- BOTTOM SHEET MODAL FOR MOBILE --- */
+            .modal-overlay {
+                align-items: flex-end; /* Pushes content to bottom */
+                padding: 0; /* Remove padding */
+            }
+            
             .modal {
-                width: 90% !important; /* Forces 90% of screen width */
-                max-width: 350px !important; /* Prevents it getting huge */
-                max-height: 80vh !important;
-                padding: 20px !important;
-                margin: auto !important;
+                width: 100%;
+                max-width: 100%;
+                border-radius: 20px 20px 0 0; /* Rounded top only */
+                margin: 0;
+                max-height: 80vh; /* Takes up 80% of screen height */
+                animation: slideUp 0.3s ease-out;
             }
-            .view-gallery img { 
-                height: 180px; /* Smaller images */
+
+            @keyframes slideUp {
+                from { transform: translateY(100%); }
+                to { transform: translateY(0); }
             }
-            .view-title { 
-                font-size: 1.4rem; 
+
+            .close-modal {
+                position: sticky;
+                top: 0;
+                right: 0;
+                float: right;
+                margin-bottom: 10px;
+                background: #eee;
+                z-index: 50;
             }
+            
+            .view-gallery img { height: 180px; }
         }
     </style>
 </head>
